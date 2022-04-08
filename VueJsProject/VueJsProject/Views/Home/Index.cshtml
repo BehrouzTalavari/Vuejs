@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html> 
+<html>
+<head> 
+	<meta name="viewport" content="width=device-width" /> 
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+	<style>
+	[v-cloak] {
+		display:none;
+	}
+	</style>
+</head> 
+<body>
+	<div id="app1" class="container" v-cloak>
+		{{10 + 5}}
+		<br />
+		{{Person.firstName.toUpperCase() + ` ` + Person.lastName.toUpperCase()}}
+	</div>
+	
+	<div id="app2" class="container" v-cloak>
+		{{10 + 50}}
+		<br />
+		{{title}}
+	</div>
+
+	<script src="~/js/vue.js"></script> 
+
+	<script>
+
+		const app1 = new Vue({
+
+			el: `#app1`,
+			data: {
+				Person: 
+				{
+					firstName: `Behrouz`,
+					lastName: `Talavari`
+				}
+			}
+		})
+		
+		const app2 = new Vue({
+
+			el: `#app2`,
+			data: {
+				title: `Hello Behrouz app2`
+			}
+		})
+
+
+	</script>
+</body>
+</html>
