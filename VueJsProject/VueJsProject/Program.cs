@@ -22,6 +22,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=FlipCards}/{id?}");
+    pattern: "{controller=Home}/{action=AjaxUsing}/{id?}");
 
 app.Run();
