@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<style>
+		[v-cloak] {
+			display: none;
+		}
+		.someName-enter{
+			color: red;
+			opacity: 0.2;
+			font-weight:100;
+		}
+		
+/*		.someName-enter-to{
+			color: blue;
+			opacity: 0.8;
+			font-weight:900;
+		}*/
+		
+		.someName-enter-active{
+			transition: all 10000ms;
+		}
+		
+/*		.someName-leave{
+			color: red;
+			opacity: 0.2;
+			font-weight:100;
+		}*/
+		
+		.someName-leave-to{
+			color: blue;
+			opacity: 0.8;
+			font-weight:900;
+		}
+		
+		.someName-leave-active{
+			transition: all 10000ms;
+		}
+	</style>
+</head>
+<body>
+
+	<div id="app" class="container" v-cloak>
+		<h1>
+			Learning Animation!
+		</h1>
+		<hr />
+		<button type="button" class="btn btn-primary" v-on:click="show = !show"> Toggle </button>
+		<hr />
+		<div class="card-columns">
+			<transition name="someName">
+				<div class="card bg-warning" v-if="show">
+					<div class="card-header">
+						Header
+					</div>
+					<div class="card-body">
+						Body
+					</div>
+					<div class="card-footer">
+						Footer
+					</div>
+				</div>
+			</transition>
+		</div>
+	</div>
+
+	<script src="~/js/vue.js"></script>
+
+	<script>
+
+		const app = new Vue({
+			el: `#app`,
+			data: {
+				show:false
+			},
+			methods:{
+
+			},
+			computed: {
+
+			},
+			created: function(){
+
+			}
+		})
+	</script>
+</body>
+</html>

@@ -18,6 +18,20 @@ namespace VueJsProject.Controllers
         public IActionResult Index()
         {
             return View();
+        }      
+        public IActionResult Animation()
+        {
+            return View();
+        }   
+        
+        public IActionResult FlipCards()
+        {
+            return View();
+        }   
+        
+        public IActionResult FlipCardsByClick()
+        {
+            return View();
         }
 
         public IActionResult Privacy()
