@@ -1,29 +1,128 @@
-﻿<!DOCTYPE html> 
+﻿<!DOCTYPE html>
 <html>
-<head> 
-	<meta name="viewport" content="width=device-width" /> 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> 
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<style>
-	[v-cloak] {
-		display:none;
-	}
+		[v-cloak] {
+			display: none;
+		}
+
+		div.class1 {
+			color: red
+		}
+
+		div.class2 {
+			font-weight: bold
+		}
 	</style>
-</head> 
+</head>
 <body>
+
 	<div id="app1" class="container" v-cloak>
 		{{10 + 5}}
 		<br />
 		{{Person.firstName.toUpperCase() + ` ` + Person.lastName.toUpperCase()}}
 	</div>
-	
+	<hr />
 	<div id="app2" class="container" v-cloak>
+		<h3 v-on:click="doSomethings()">Click Me!</h3>
+		<h3 @@click="doSomethings()">Click Me!</h3>
 		{{10 + 50}}
 		<br />
 		{{title}}
+		<h3 v-show="display">tag dispaly</h3>
+
+		<table class="d-md-table">
+			<tr>
+				<th>id</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Count</th>
+			</tr>
+			<tr v-for="item in items">
+				<td>{{item.id}}</td>
+				<td>{{item.name}}</td>
+				<td>{{item.price}}</td>
+				<td>{{item.count}}</td>
+			</tr>
+		</table>
+		<hr />
+		<div class="class1">
+			class bindings
+		</div>
+		<hr />
+		<div class="class2">
+			hello world (1)!
+		</div>
+		<hr />
+		<div class="class1 class2">
+			hello world (3)!
+		</div>
+		<hr />
+		<input type="checkbox" v-model="hasSomeClass1" />
+		Has Some Class 1
+		<br />
+		<div v-bind:class="{class1:hasSomeClass1}">
+			Hello, World (4)!
+		</div>
+		<hr />
+		<input type="checkbox" v-model="hasSomeClass2" />
+		Has Some Class 2
+		<br />
+		<input type="checkbox" v-model="hasSomeClass3" />
+		Has Some Class 3
+		<br />
+		<div v-bind:class="{class1:hasSomeClass2, class2:hasSomeClass3}">
+			Hello, World (5)!
+		</div>
+		<hr />
+		<button type="button" class="btn btn-primary btn-sm" v-on:click="toggleClass1()">Toggle</button>
+		<br />
+		<div v-bind:class="cssClass">
+			Hello, World (6)!
+		</div>
+		<hr />
+		<div v-bind:class="[cssClass1, cssClass2]">
+			Hello, World (7)!
+		</div>
+		<hr />
+
+		<button type="button" class="btn btn-primary btn-sm" v-on:click="toggleClass2()">Toggle</button>
+		<br />
+		<div v-bind:class="[someBoolean ? cssClass1 : cssClass2]">
+			Hello, World (8)!
+		</div>
+		<hr />
+
+
+		<select v-model="selectedRole">
+			<option v-bind:value="null">Filter By ROle</option>
+			<option v-for="item in getUniqueRoleList" v-bind:value="item">{{ item }}</option>
+		</select>
+		<div class="card-columns">
+			<div class="card" v-for="item in people" v-show="selectedRole === null || item.role === selectedRole">
+				<div class="card-header"
+					 v-bind:class="[item.displayDetails ? cssClass3 : cssClass4]" v-on:click="toggleDisplayDetails(item)">
+					{{item.fullName}}
+				</div>
+
+				<div class="card-body" v-show="item.displayDetails">
+					Age: {{item.age}}
+					<br />
+					Role: {{item.role}}
+				</div>
+
+				<div class="card-footer" v-if="item.description" v-show="item.displayDetails">
+					{{item.description }}
+				</div>
+			</div>
+		</div>
+
 	</div>
 
-	<script src="~/js/vue.js"></script> 
+	<script src="~/js/vue.js"></script>
 
 	<script>
 
@@ -31,22 +130,108 @@
 
 			el: `#app1`,
 			data: {
-				Person: 
+				Person:
 				{
 					firstName: `Behrouz`,
 					lastName: `Talavari`
 				}
 			}
 		})
-		
+
+		const products=
+		[
+			{id:1, name:`Name 1`,price: 10, count: 1},
+			{id:2, name:`Name 2`,price: 20, count: 1},
+			{id:3, name:`Name 4`,price: 30, count: 1},
+			{id:4, name:`Name 4`,price: 40, count: 1},
+			{id:5, name:`Name 5`,price: 50, count: 1},
+		]
+
+		const allOfPeople =
+		[
+			{displayDetails:true,id:1, fullName: `Full Name(1)` ,age : 21, role: `user`, description:`Description (1)`,},
+			{displayDetails:true,id:2, fullName: `Full Name(2)` ,age : 22, role: `manager`, description:`Description (2)`,},
+			{displayDetails:true,id:3, fullName: `Full Name(3)` ,age : 23, role: `admin`, description:`Description (3)`,},
+			{displayDetails:true,id:4, fullName: `Full Name(4)` ,age : 24, role: `user`, description:`Description (4)`,},
+			{displayDetails:true,id:5, fullName: `Full Name(5)` ,age : 25, role: `manager`, },
+			{displayDetails:true,id:6, fullName: `Full Name(6)` ,age : 26, role: `user`, description:`Description (6)`,},
+			{displayDetails:true,id:7, fullName: `Full Name(7)` ,age : 27, role: `admin`, },
+			{displayDetails:true,id:8, fullName: `Full Name(8)` ,age : 28, role: `user`, },
+			{displayDetails:true,id:9, fullName: `Full Name(9)` ,age : 29, role: `user`, },
+		]
 		const app2 = new Vue({
 
 			el: `#app2`,
 			data: {
-				title: `Hello Behrouz app2`
+				title: `Hello Behrouz app2`,
+				display:true,
+				items:products,
+				hasSomeClass1:false,
+				hasSomeClass2:false,
+				hasSomeClass3:false,
+
+				cssClass: `class1`,
+
+				cssClass1: `class1`,
+				cssClass2: `class2`,
+
+				someBoolean: true,
+
+				getUniqueRoleList :[`user`, `manager`, `admin`],
+				selectedRole : null,
+				people : allOfPeople,
+				cssClass3: `bg-info`,
+				cssClass4: `bg-success`,
+			},
+			methods: {
+				doSomethings: function (){
+					alert(`salam Behrouz`);
+					this.title='salam';
+				},
+				toggleClass1:function(){
+					if(this.cssClass===`class1`){
+						this.cssClass=`class2`
+					}else{
+						this.cssClass=`class1`
+					}
+				},
+				toggleClass2:function(){
+					this.someBoolean=!this.someBoolean
+				},
+				toggleDisplayDetails:function(item){
+					item.displayDetails=!item.displayDetails
+				}
+			},
+			beforeCreate:function(){
+				console.log('Before Created!')
+			},
+			created :function(){
+				console.log('Created!')
+			},
+			beforeMount:function(){
+				console.log('Before Mount!')
+			},
+			mounted:function(){
+				console.log('Mounted!')
+			},
+			beforeUpdate:function(){
+				console.log('before Updated!')
+			},
+			updated:function(){
+				console.log('Updated!')
+			},
+			beforeDestroy:function(){
+				console.log('Before Destroy!')
+			},
+			destroy:function(){
+				console.log('Destroyed!')
 			}
 		})
 
+		//setTimeout(function(){
+		//	app2.$destroy();
+		//	console.log('ddddd')
+		//},3000)
 
 	</script>
 </body>
