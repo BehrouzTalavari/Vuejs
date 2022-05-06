@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width" />
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<style>
+		[v-cloak] {
+			display: none;
+		}
+		.someName-enter{
+			color: red;
+			opacity: 0.2;
+			font-weight:100;
+		}
+		
+/*		.someName-enter-to{
+			color: blue;
+			opacity: 0.8;
+			font-weight:900;
+		}*/
+		
+		.someName-enter-active{
+			transition: all 10000ms;
+		}
+		
+/*		.someName-leave{
+			color: red;
+			opacity: 0.2;
+			font-weight:100;
+		}*/
+		
+		.someName-leave-to{
+			color: blue;
+			opacity: 0.8;
+			font-weight:900;
+		}
+		
+		.someName-leave-active{
+			transition: all 10000ms;
+		}
+	</style>
+</head>
+<body>
+<div id="app" class="container" v-cloak>
+		<h3>
+			Event Bubbling -  With One Parameter!
+		</h3>
+
+		<hr />
+
+		<dtx-component v-on:button-clicked="internalButtonClicked($event)"></dtx-component>
+	</div>
+
+	<script src="~/js/vue.js"></script>
+
+	<script>
+Vue.component(`dtx-component`, {
+			props: [],
+			data: function () {
+				return ({
+					message: `Hello, World!`,
+				})
+			},
+			created: function () {
+			},
+			template:
+				`<div>
+						<input type="text" v-model="message" />
+						<button type="button" v-on:click="doSomething()">Click Me!</button>
+					</div>`,
+			methods: {
+				doSomething: function () {
+					this.$emit(`button-clicked`, this.message)
+				},
+			},
+		})
+		const app = new Vue({
+			el: `#app`,
+			data: {
+			},
+			created: function () {
+			},
+			methods: {
+				internalButtonClicked: function (e) {
+					alert(e)
+				},
+			},
+			computed: {
+			},
+		})
+
+	</script>
+</body>
+</html>

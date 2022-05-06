@@ -37,6 +37,10 @@ namespace VueJsProject.Controllers
             return View();
         }
 
+        public IActionResult EventBubbling()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
