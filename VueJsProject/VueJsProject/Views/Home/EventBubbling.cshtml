@@ -59,7 +59,8 @@ Vue.component(`dtx-component`, {
 			props: [],
 			data: function () {
 				return ({
-					message: `Hello, World!`,
+					message1: `Hello, World!`,
+					message2: `My name is Behrouz Talavari!`,
 				})
 			},
 			created: function () {
@@ -70,9 +71,15 @@ Vue.component(`dtx-component`, {
 						<button type="button" v-on:click="doSomething()">Click Me!</button>
 					</div>`,
 			methods: {
+				
 				doSomething: function () {
-					this.$emit(`button-clicked`, this.message)
+					// دستور ذیل غلط می‌باشد
+					//this.$emit(`button-clicked`, this.message1, this.message2)
+					let result =
+						{ a: this.message1, b: this.message2, }
+					this.$emit(`button-clicked`, result)
 				},
+
 			},
 		})
 		const app = new Vue({
@@ -83,7 +90,10 @@ Vue.component(`dtx-component`, {
 			},
 			methods: {
 				internalButtonClicked: function (e) {
-					alert(e)
+					let message =
+						`A: ${e.a}\rB: ${e.b}`
+					alert(message)
+					//alert(`A: ` + e.a + `\rB: ` + e.b)
 				},
 			},
 			computed: {
